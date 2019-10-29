@@ -8,33 +8,9 @@
     <link rel="stylesheet" href="./styles/journal.css">
 </head>
 <body>
-    <h1>Daily Journal</h1>
-    <form action="">
-        <fieldset>
-            <label for="journalDate">Date of entry</label>
-            <input type="date" name="journalDate" id="journalDate">
-        </fieldset>
-        <fieldset>
-            <label for="journalConcepts">Concepts Covered</label>
-            <input type="text" name="journalConcepts" id="journalConcepts">
-        </fieldset>
-        <fieldset>
-            <label for="journalEntry">Journal Entry</label>
-            <textarea name="journalEntry" id="journalEntry" cols="25" rows="5"></textarea>
-        </fieldset>
-        <fieldset>
-            <label for="mood">Mood for the Day</label>
-            <select name="mood" id="mood">
-                <option value="great">Great!</option>
-                <option value="stressed">Stressed</option>
-                <option value="ok">Ok</option>
-                <option value="tired">Tired</option>
-                <option value="good-not-great">Good not great</option>
-
-            </select>
-        </fieldset>
-        <input type="submit" value="Record Daily Journal">
-    </form>
-    <script src="scripts/journal.js"></script>
+    <div id="formGoesHere"></div>
+    <article class="domRef"></article>
+   
+    <script type="module" src="scripts/journal.js"></script>
 </body>
 </html>
