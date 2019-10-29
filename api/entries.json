@@ -1,0 +1,10 @@
+{ "journal": [
+    {
+        "id": 1,
+        "date": "today",
+        "title": "stuff",
+        "entry": "yep",
+        "mood": "good"
+        
+        }
+]}

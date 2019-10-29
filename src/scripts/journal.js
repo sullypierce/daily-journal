@@ -4,10 +4,10 @@
 */
 
 const journalEntry = {
-date: "",
-title: "",
-entry: "",
-mood: "",
+date: "today",
+title: "stuff",
+entry: "yep",
+mood: "good",
 
 };
 
@@ -16,14 +16,6 @@ const journal = [
 
 ];
 //this function takes the parts of a journal entry and puts them in an object!
-const writeEntry = function(Date, Title, Entry, Mood) {
-    return {
-        date: Date,
-        title: Title,
-        entry: Entry,
-        mood: Mood
-    }
-};
 
 //heres a test of my writeEntry function
 const firstEntry = writeEntry("today","title","learned a lot","Feeling good!")
@@ -31,3 +23,5 @@ const firstEntry = writeEntry("today","title","learned a lot","Feeling good!")
 journal.push(firstEntry);
 
 console.log(journal);
+
+
