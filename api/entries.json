@@ -1,11 +1,31 @@
 {
   "journal": [
     {
-      "date": "2019-10-08",
-      "title": "daf",
-      "entry": "sdaf",
+      "date": "2019-10-09",
+      "title": "Hello",
+      "entry": "there!",
       "mood": "great",
       "id": 1
+    },
+    {
+      "date": "2019-10-09",
+      "title": "Smart stuff",
+      "entry": "much learn, big brain",
+      "mood": "great",
+      "id": 2
+    },
+    {
+      "date": "2019-10-30",
+      "title": "Smart stuff",
+      "entry": "much learn, big brain",
+      "mood": "great",
+      "id": 3
+    },
+    {
+      "date": "2019-10-30",
+      "title": "smart stuff",
+      "entry": "much learn, big brain, alles guht",
+      "mood": "great",
+      "id": 4
     }
-  ]
-}
+  ] }
