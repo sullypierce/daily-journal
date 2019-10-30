@@ -8,7 +8,7 @@ DOM.formOnDom();
 
 document.querySelector("#record").addEventListener("click", () => {
     API.postEntry();
-
+    API.fetchJournalEntry().then(DOM.postJournal)
 })
 
 

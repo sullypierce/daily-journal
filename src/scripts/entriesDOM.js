@@ -1,8 +1,8 @@
 const DOM = {
-    formOnDom : () => {
+    formOnDom: () => {
 
-    document.querySelector("#formGoesHere").innerHTML =
-        `<h1>Daily Journal</h1>
+        document.querySelector("#formGoesHere").innerHTML =
+            `<h1>Daily Journal</h1>
     <form action="">
         <fieldset>
             <label for="journalDate">Date of entry</label>
@@ -27,17 +27,23 @@ const DOM = {
 
             </select>
         </fieldset>
-        <input id="record" type="button" value="Record Daily Journal">
-    </form>`
+    </form>
+    <input id="record" type="button" value="Record Daily Journal">`
     },
-postJournal : (entry) => {
-const domRef = document.querySelector(".domRef");
+    postJournal: (journalEntries) => {
+        console.log(journalEntries);
+        journalEntries.forEach(entry => {
 
-    const divEl = document.createElement("div");
-    divEl.innerHTML = `<h2>${entry.date}, ${entry.title}</h2>
+
+            const domRef = document.querySelector(".domRef");
+
+            const divEl = document.createElement("div");
+            divEl.innerHTML = `<h2>${entry.date}, ${entry.title}</h2>
     <p>Entry: ${entry.entry}, MOOD: ${entry.mood}</p>`
-    domRef.appendChild(divEl);
-}}
+            domRef.appendChild(divEl);
+        });
+    }
+}
 
 
 export default DOM
