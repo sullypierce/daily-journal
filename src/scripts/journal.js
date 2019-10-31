@@ -3,12 +3,12 @@ import API from "./data.js";
 
 
 DOM.formOnDom();
+API.fetchJournalEntry().then(DOM.postJournal);
 
 
 
 document.querySelector("#record").addEventListener("click", () => {
-    API.postEntry();
-    API.fetchJournalEntry().then(DOM.postJournal)
+    API.postEntry().then(API.fetchJournalEntry).then(DOM.postJournal)
 })
 
 
