@@ -1,3 +1,32 @@
 {
-  "journal": []
+  "journal": [
+    {
+      "date": "2019-10-15",
+      "title": "adsf",
+      "entry": "asdf",
+      "mood": "stressed",
+      "id": 2
+    },
+    {
+      "date": "2019-10-15",
+      "title": "adsf",
+      "entry": "asdf",
+      "mood": "ok",
+      "id": 3
+    },
+    {
+      "date": "2019-10-15",
+      "title": "adsf",
+      "entry": "asdf",
+      "mood": "tired",
+      "id": 4
+    },
+    {
+      "date": "2019-10-15",
+      "title": "adsf",
+      "entry": "asdf",
+      "mood": "good-not-great",
+      "id": 5
+    }
+  ]
 }
