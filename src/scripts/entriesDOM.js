@@ -1,3 +1,5 @@
+import API from "./data.js"
+
 const DOM = {
     formOnDom: () => {
 
@@ -31,19 +33,21 @@ const DOM = {
     <input id="record" type="button" value="Record Daily Journal">`
     },
     postJournal: (journalEntries) => {
-        console.log(journalEntries);
+        const domRef = document.querySelector(".domRef");
+        domRef.innerHTML = ""
         journalEntries.forEach(entry => {
 
-
-            const domRef = document.querySelector(".domRef");
-
             const divEl = document.createElement("div");
-            divEl.innerHTML = `<h2>${entry.date}, ${entry.title}</h2>
-    <p>Entry: ${entry.entry}, MOOD: ${entry.mood}</p>`
+            divEl.innerHTML = `<h2>${entry.date}  ${entry.title}</h2>
+                <p>Entry: ${entry.entry}  MOOD: ${entry.mood}</p>
+                <button id="delete--${entry.id}">Delete Entry</button>`
             domRef.appendChild(divEl);
-        });
-    }
-}
+            document.querySelector(`#delete--${entry.id}`).addEventListener("click", () => {
+                API.deleteEntry().then(API.fetchJournalEntry).then(DOM.postJournal);
+            })
+        })
+}}
+
 
 
 export default DOM
