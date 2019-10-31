@@ -3,6 +3,8 @@ import API from "./data.js";
 
 
 DOM.formOnDom();
+DOM.buildRadio();
+DOM.addRadioListener();
 API.fetchJournalEntry().then(DOM.postJournal);
 
 

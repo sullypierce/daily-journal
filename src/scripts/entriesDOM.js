@@ -2,10 +2,10 @@ import API from "./data.js"
 
 const DOM = {
     formOnDom: () => {
-
-        document.querySelector("#formGoesHere").innerHTML =
-            `<h1>Daily Journal</h1>
-    <form action="">
+        const container = document.querySelector("#formGoesHere");
+        
+           const form = `<h1>Daily Journal</h1>
+    <form class="make" action="">
         <fieldset>
             <label for="journalDate">Date of entry</label>
             <input type="date" name="journalDate" id="journalDate">
@@ -29,12 +29,47 @@ const DOM = {
 
             </select>
         </fieldset>
-    </form>
-    <input id="record" type="button" value="Record Daily Journal">`
+    </form>`
+    
+
+    container.innerHTML =form
+        if (document.querySelector("form").classList[0] === "edit") {
+            container.innerHTML += `<input id="updateEntry" type="button" value="Update">`
+        } else {
+    container.innerHTML += `<input id="record" type="button" value="Record Daily Journal">`
+        }
     },
+
+
+
+    buildRadio: () => {
+        const radioField = `<fieldset id="radioField">
+        <legend>Sift by Mood</legend>
+        <label for="great">Great!</label>
+        <input type="radio" name="moodSelect" id="great">
+
+        <label for="stressed">Stressed</label>
+        <input type="radio" name="moodSelect" id="stressed">
+
+        <label for="ok">OK</label>
+        <input type="radio" name="moodSelect" id="ok">
+
+        <label for="tired">Tired</label>
+        <input type="radio" name="moodSelect" id="tired">
+
+        <label for="notGreat">Good Not Great</label>
+        <input type="radio" name="moodSelect" id="not">
+    </fieldset>`
+
+        document.querySelector("#formGoesHere").innerHTML += radioField;
+    },
+
+
+
     postJournal: (journalEntries) => {
         const domRef = document.querySelector(".domRef");
         domRef.innerHTML = ""
+        
         journalEntries.forEach(entry => {
 
             const divEl = document.createElement("div");
@@ -46,7 +81,22 @@ const DOM = {
                 API.deleteEntry().then(API.fetchJournalEntry).then(DOM.postJournal);
             })
         })
-}}
+    },
+
+
+    addRadioListener: () => {
+        document.querySelector("#radioField").addEventListener("click", () => {
+            const entrId = event.target.id;
+            API.fetchJournalEntry().then((entries) => {
+                const filteredEntries = entries.filter((entry) => {if (entry.mood.includes(entrId)) {
+                    return entry;
+                }})
+                DOM.postJournal(filteredEntries);
+            })
+    })
+    }
+}
+
 
 
 
