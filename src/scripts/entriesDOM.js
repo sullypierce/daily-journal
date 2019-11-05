@@ -1,6 +1,6 @@
 import API from "./data.js"
 import entryFunctions from "./entryComponent.js"
-import searching from "./searchManager.js"
+import searchingStuff from "./searchManager.js"
 
 const DOM = {
     formOnDom: () => {
@@ -139,7 +139,7 @@ const DOM = {
         document.getElementById("searchBar").addEventListener("keypress", (event) => {
             if (event.charCode === 13) {
                 const searchValue = document.getElementById("searchBar").value;
-                searching.searchEntries(searchValue);
+                searchingStuff.searchEntries(searchValue);
             }
         })
     }

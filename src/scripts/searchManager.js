@@ -1,6 +1,6 @@
 import API from "./data.js"
-
-const searching = {
+import DOM from "./entriesDOM.js"
+const searchingStuff = {
     searchEntries: (input) => {
         API.fetchJournalEntry().then((entries) => {
             console.log(entries)
@@ -19,8 +19,10 @@ const searching = {
                 }
             })
             console.log("found", foundEntries)
+            //need to take found entries and post them to the dom
+            DOM.postJournal(foundEntries);
         })
     }
 }
 
-export default searching
+export default searchingStuff
