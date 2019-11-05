@@ -1,11 +1,12 @@
 import API from "./data.js"
 import entryFunctions from "./entryComponent.js"
+import searchingStuff from "./searchManager.js"
 
 const DOM = {
     formOnDom: () => {
         const container = document.querySelector("#formGoesHere");
-        
-           const form = `
+
+        const form = `
     <form class="make" action="">
         <fieldset>
             <legend>Date of entry</legend>
@@ -31,20 +32,22 @@ const DOM = {
             </select>
         </fieldset>
     </form>`
-    
 
-    container.innerHTML =form
+
+        container.innerHTML = form
         if (document.querySelector("h1").classList[0] === "edit") {
             container.innerHTML += `<button id="updateEntry">Update</button>`
         } else {
-    container.innerHTML += `<button id="record">Record Daily Journal</button>`
+            container.innerHTML += `<button id="record">Record Daily Journal</button>`
         }
     },
 
 
 
-    buildRadio: () => {
-        const radioField = `<fieldset id="radioField">
+    buildRadioAndSearch: () => {
+        const radioField = `
+        <div>
+        <fieldset id="radioField">
         <legend>Sift by Mood</legend>
         <label for="great">Great!</label>
         <input type="radio" name="moodSelect" id="great">
@@ -60,7 +63,12 @@ const DOM = {
 
         <label for="notGreat">Good Not Great</label>
         <input type="radio" name="moodSelect" id="not" class="radioButton">
-    </fieldset>`
+    </fieldset>
+    <fieldset>
+    <legend>Search</legend>
+    <input type="text" id="searchBar">
+    </fieldset>
+    </div>`
 
         document.querySelector("#formGoesHere").innerHTML += radioField;
     },
@@ -70,7 +78,7 @@ const DOM = {
     postJournal: (journalEntries) => {
         const domRef = document.querySelector(".domRef");
         domRef.innerHTML = ""
-        
+
         journalEntries.forEach(entry => {
 
             const divEl = document.createElement("div");
@@ -87,7 +95,7 @@ const DOM = {
                 document.querySelector("h1").className = "edit";
                 document.querySelector("#formGoesHere").innerHTML = "";
                 DOM.formOnDom();
-                
+
                 API.getSingleEntry(entry.id).then((entryObj) => {
                     console.log(entryObj)
                     //fill in all the inputs with the values from the single entry obj just fetched
@@ -103,7 +111,7 @@ const DOM = {
                         API.editSingleEntry(entry.id, newEntry).then(() => {
                             document.querySelector("#formGoesHere").innerHTML = "";
                             DOM.formOnDom();
-                            DOM.buildRadio();
+                            DOM.buildRadioAndSearch();
                             API.fetchJournalEntry().then((entries) => {
                                 DOM.postJournal(entries);
 
@@ -116,16 +124,24 @@ const DOM = {
     },
 
 
-    addRadioListener: () => {
+    addRadioAndSearchListener: () => {
         document.querySelector("#radioField").addEventListener("click", () => {
             const entrId = event.target.id;
             API.fetchJournalEntry().then((entries) => {
-                const filteredEntries = entries.filter((entry) => {if (entry.mood.includes(entrId)) {
-                    return entry;
-                }})
+                const filteredEntries = entries.filter((entry) => {
+                    if (entry.mood.includes(entrId)) {
+                        return entry;
+                    }
+                })
                 DOM.postJournal(filteredEntries);
             })
-    })
+        });
+        document.getElementById("searchBar").addEventListener("keypress", (event) => {
+            if (event.charCode === 13) {
+                const searchValue = document.getElementById("searchBar").value;
+                searchingStuff.searchEntries(searchValue);
+            }
+        })
     }
 }
 
