@@ -10,6 +10,24 @@ const API = {
             
     },
 
+    getSingleEntry:  (entryId) => {
+        return fetch(`http://localhost:8088/journal/${entryId}`)
+        .then(entryData => {
+            return entryData.json();
+        })
+    },
+
+    editSingleEntry: (entryId, updatedObject) => {
+        return fetch(`http://localhost:8088/journal/${entryId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedObject)
+    })
+    .then(jsonData => jsonData.json())
+    },
+
     postEntry: () => {
         // Invoke the factory function, passing along the form field values
         const newJournalEntry = entryFunctions.getInput();
