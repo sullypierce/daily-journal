@@ -1,25 +1,26 @@
 import API from "./data.js"
+import entryFunctions from "./entryComponent.js"
 
 const DOM = {
     formOnDom: () => {
         const container = document.querySelector("#formGoesHere");
         
-           const form = `<h1>Daily Journal</h1>
+           const form = `
     <form class="make" action="">
         <fieldset>
-            <label for="journalDate">Date of entry</label>
+            <legend>Date of entry</legend>
             <input type="date" name="journalDate" id="journalDate">
         </fieldset>
         <fieldset>
-            <label for="journalConcepts">Concepts Covered</label>
+            <legend>Concepts Covered</legend>
             <input type="text" name="journalConcepts" id="journalConcepts">
         </fieldset>
         <fieldset>
-            <label for="journalEntry">Journal Entry</label>
+            <legend>Journal Entry</legend>
             <textarea name="journalEntry" id="journalEntry" cols="25" rows="5"></textarea>
         </fieldset>
         <fieldset>
-            <label for="mood">Mood for the Day</label>
+            <legend>Mood for the Day</legend>
             <select name="mood" id="mood">
                 <option value="great">Great!</option>
                 <option value="stressed">Stressed</option>
@@ -33,10 +34,10 @@ const DOM = {
     
 
     container.innerHTML =form
-        if (document.querySelector("form").classList[0] === "edit") {
-            container.innerHTML += `<input id="updateEntry" type="button" value="Update">`
+        if (document.querySelector("h1").classList[0] === "edit") {
+            container.innerHTML += `<button id="updateEntry">Update</button>`
         } else {
-    container.innerHTML += `<input id="record" type="button" value="Record Daily Journal">`
+    container.innerHTML += `<button id="record">Record Daily Journal</button>`
         }
     },
 
@@ -49,16 +50,16 @@ const DOM = {
         <input type="radio" name="moodSelect" id="great">
 
         <label for="stressed">Stressed</label>
-        <input type="radio" name="moodSelect" id="stressed">
+        <input class="radioButton" type="radio" name="moodSelect" id="stressed">
 
         <label for="ok">OK</label>
-        <input type="radio" name="moodSelect" id="ok">
+        <input type="radio" class="radioButton" name="moodSelect" id="ok">
 
         <label for="tired">Tired</label>
-        <input type="radio" name="moodSelect" id="tired">
+        <input type="radio" name="moodSelect" class="radioButton" id="tired">
 
         <label for="notGreat">Good Not Great</label>
-        <input type="radio" name="moodSelect" id="not">
+        <input type="radio" name="moodSelect" id="not" class="radioButton">
     </fieldset>`
 
         document.querySelector("#formGoesHere").innerHTML += radioField;
@@ -73,12 +74,43 @@ const DOM = {
         journalEntries.forEach(entry => {
 
             const divEl = document.createElement("div");
+            divEl.id = "entryEl"
             divEl.innerHTML = `<h2>${entry.date}  ${entry.title}</h2>
                 <p>Entry: ${entry.entry}  MOOD: ${entry.mood}</p>
-                <button id="delete--${entry.id}">Delete Entry</button>`
+                <button id="delete--${entry.id}">Delete Entry</button>
+                <button id="edit--${entry.id}">Edit</button>`
             domRef.appendChild(divEl);
             document.querySelector(`#delete--${entry.id}`).addEventListener("click", () => {
                 API.deleteEntry().then(API.fetchJournalEntry).then(DOM.postJournal);
+            })
+            document.querySelector(`#edit--${entry.id}`).addEventListener("click", () => {
+                document.querySelector("h1").className = "edit";
+                document.querySelector("#formGoesHere").innerHTML = "";
+                DOM.formOnDom();
+                
+                API.getSingleEntry(entry.id).then((entryObj) => {
+                    console.log(entryObj)
+                    //fill in all the inputs with the values from the single entry obj just fetched
+                    document.querySelector("#journalDate").value = entryObj.date
+                    document.querySelector("#journalConcepts").value = entryObj.title
+                    document.querySelector("#journalEntry").value = entryObj.entry
+                    document.querySelector("#mood").value = entryObj.mood
+
+                    document.querySelector("#updateEntry").addEventListener("click", () => {
+                        const newEntry = entryFunctions.writeEntry(document.querySelector("#journalDate").value, document.querySelector("#journalConcepts").value, document.querySelector("#journalEntry").value, document.querySelector("#mood").value)
+
+
+                        API.editSingleEntry(entry.id, newEntry).then(() => {
+                            document.querySelector("#formGoesHere").innerHTML = "";
+                            DOM.formOnDom();
+                            DOM.buildRadio();
+                            API.fetchJournalEntry().then((entries) => {
+                                DOM.postJournal(entries);
+
+                            })
+                        })
+                    })
+                })
             })
         })
     },
