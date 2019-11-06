@@ -36,9 +36,9 @@ const DOM = {
 
         container.innerHTML = form
         if (document.querySelector("h1").classList[0] === "edit") {
-            container.innerHTML += `<button id="updateEntry">Update</button>`
+            container.innerHTML += "<button id='updateEntry'>Update</button>"
         } else {
-            container.innerHTML += `<button id="record">Record Daily Journal</button>`
+            container.innerHTML += "<button id='record'>Record Daily Journal</button>"
         }
     },
 

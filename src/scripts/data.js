@@ -7,7 +7,6 @@ const API = {
             .then(entryData => {
                 return entryData.json();
             })
-            
     },
 
     getSingleEntry:  (entryId) => {
